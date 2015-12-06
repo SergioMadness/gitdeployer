@@ -7,7 +7,9 @@ import(
 )
 
 type Configuration struct {
-	Servers []*Server
+	Host string;
+	Port int;
+	Servers []*Server;
 }
 
 var ConfigFilePath, TokenFilePath string;

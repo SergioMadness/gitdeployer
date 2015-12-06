@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"gitdeployer/config"
 	"gitdeployer/controllers"
 	"fmt"
@@ -56,6 +57,8 @@ func main() {
 	
 	config.ConfigFilePath = "config.yml";
 	config.TokenFilePath = "tokens.json";
+	
+	configuration := config.GetConfiguration();
 
 	if len(os.Args) > 1 {
 		command = os.Args[1]
@@ -69,7 +72,7 @@ func main() {
 		// Deploy
 		http.HandleFunc("/deploy", handleRequest)
 
-		err := http.ListenAndServe(":", nil)
+		err := http.ListenAndServe(configuration.Host+":"+strconv.Itoa(configuration.Port), nil);
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)
 		}
