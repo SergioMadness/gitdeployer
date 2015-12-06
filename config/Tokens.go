@@ -2,7 +2,6 @@ package config;
 
 import (
 	"time"
-//	"gopkg.in/yaml.v2"
 	"encoding/json"
 	"gitdeployer/helpers"
 	"io/ioutil"

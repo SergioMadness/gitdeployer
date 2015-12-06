@@ -63,10 +63,10 @@ func main() {
 	} else {
 		// Main page
 		http.HandleFunc("/", handleMessage)
-		// Registration
+		// Deploy
 		http.HandleFunc("/deploy", handleRequest)
 
-		err := http.ListenAndServe(":81", nil)
+		err := http.ListenAndServe(":", nil)
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)
 		}
