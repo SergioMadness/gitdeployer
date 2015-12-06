@@ -2,7 +2,6 @@ package config;
 
 import (
 	"time"
-//	"gopkg.in/yaml.v2"
 	"encoding/json"
 	"gitdeployer/helpers"
 	"io/ioutil"
@@ -13,7 +12,7 @@ type Token struct {
 	Hash string;
 }
 
-func CreateToken(token string) *Token {
+func AddToken(token string) *Token {
 	result:=new(Token);
 	
 	result.Hash = token;
@@ -22,11 +21,11 @@ func CreateToken(token string) *Token {
 	return result;
 }
 
-func AddToken() string {
+func CreateToken() string {
 	result:=helpers.RandomString(24);
 	
 	tokens:=getTokens();
-	tokens=append(tokens, CreateToken(result));
+	tokens=append(tokens, AddToken(result));
 	saveTokens(tokens);
 	
 	return result;
@@ -66,7 +65,7 @@ func saveTokens(tokens []*Token) bool {
 	result:=false;
 	
 	if ts, err := json.Marshal(tokens); err==nil {
-		ioutil.WriteFile(currentConfig.TokenFilePath, ts, 0777);
+		ioutil.WriteFile(TokenFilePath, ts, 0777);
 		result = true;
 	}
 	
@@ -76,8 +75,8 @@ func saveTokens(tokens []*Token) bool {
 func getTokens() []*Token {
 	var result []*Token;
 	
-	if helpers.IsFileExists(currentConfig.TokenFilePath) {
-		json.Unmarshal([]byte(currentConfig.TokenFilePath), result);
+	if helpers.IsFileExists(TokenFilePath) {
+		json.Unmarshal([]byte(TokenFilePath), result);
 	}
 	
 	return result;

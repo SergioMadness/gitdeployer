@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"gitdeployer/config"
 	"gitdeployer/controllers"
 	"fmt"
@@ -29,7 +30,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	token := r.FormValue("access-token")
 	if token != "" {
-		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
+//		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
 	}
 
 	switch r.URL.Path {
@@ -52,7 +53,12 @@ func consoleCommand(command string) {
 }
 
 func main() {
-	command := ""
+	command := "";
+	
+	config.ConfigFilePath = "config.yml";
+	config.TokenFilePath = "tokens.json";
+	
+	configuration := config.GetConfiguration();
 
 	if len(os.Args) > 1 {
 		command = os.Args[1]
@@ -63,10 +69,10 @@ func main() {
 	} else {
 		// Main page
 		http.HandleFunc("/", handleMessage)
-		// Registration
+		// Deploy
 		http.HandleFunc("/deploy", handleRequest)
 
-		err := http.ListenAndServe(":81", nil)
+		err := http.ListenAndServe(configuration.Host+":"+strconv.Itoa(configuration.Port), nil);
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)
 		}
