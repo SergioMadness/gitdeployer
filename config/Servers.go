@@ -1,9 +1,8 @@
 package config;
 
-import (
-	"gopkg.in/yaml.v2"
-	"gitdeployer/helpers"
-)
+//import (
+//	"gitdeployer/helpers"
+//)
 
 type Server struct {
 	Name string;
@@ -35,22 +34,6 @@ func RemoveServer(name string) bool {
 
 func IsServerExists(name string) bool {
 	result := false;
-	
-	return result;
-}
-
-func saveServers(servers []*Server) bool {
-	result := false;
-	
-	return result;
-}
-
-func getServers() []*Server {
-	var result []*Server;
-	
-	if helpers.IsFileExists(currentConfig.ServersFilePath) {
-		yaml.Unmarshal([]byte(currentConfig.TokenFilePath), result);
-	}
 	
 	return result;
 }

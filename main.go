@@ -29,7 +29,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	token := r.FormValue("access-token")
 	if token != "" {
-		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
+//		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
 	}
 
 	switch r.URL.Path {
@@ -52,7 +52,10 @@ func consoleCommand(command string) {
 }
 
 func main() {
-	command := ""
+	command := "";
+	
+	config.ConfigFilePath = "config.yml";
+	config.TokenFilePath = "tokens.json";
 
 	if len(os.Args) > 1 {
 		command = os.Args[1]
