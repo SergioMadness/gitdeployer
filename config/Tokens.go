@@ -8,10 +8,6 @@ import (
 	"io/ioutil"
 )
 
-type Configuration struct {
-	TokenFilePath string;
-}
-
 type Token struct {
 	CreateDate int64;
 	Hash string;
@@ -25,13 +21,6 @@ func CreateToken(token string) *Token {
 	
 	return result;
 }
-
-var currentConfig Configuration;
-
-func GetConfiguration() Configuration {
-	return currentConfig;
-}
-
 
 func AddToken() string {
 	result:=helpers.RandomString(24);
