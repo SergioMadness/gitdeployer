@@ -45,10 +45,10 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 func consoleCommand(command string) {
 	switch command {
 	case "create-token":
-		config.CreateToken()
+		fmt.Println(config.CreateToken());
 		break
 	default:
-		fmt.Println("Unknown command")
+		fmt.Println("Unknown command");
 	}
 }
 

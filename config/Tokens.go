@@ -1,6 +1,7 @@
 package config;
 
 import (
+	"fmt"
 	"time"
 	"encoding/json"
 	"gitdeployer/helpers"
@@ -76,7 +77,11 @@ func getTokens() []*Token {
 	var result []*Token;
 	
 	if helpers.IsFileExists(TokenFilePath) {
-		json.Unmarshal([]byte(TokenFilePath), result);
+		if tokensStr, err:=ioutil.ReadFile(TokenFilePath); err==nil {
+			if err:=json.Unmarshal(tokensStr, &result); err!=nil {
+				fmt.Println(err)
+			}
+		}
 	}
 	
 	return result;

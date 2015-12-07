@@ -1,3 +1,4 @@
 *.exe
 *.yml
+*.json
 gitdeployer
