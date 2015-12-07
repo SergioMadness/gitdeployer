@@ -55,7 +55,7 @@ func consoleCommand(command string) {
 func main() {
 	command := "";
 	
-	config.ConfigFilePath = "config.yml";
+	config.ConfigFilePath = "config.json";
 	config.TokenFilePath = "tokens.json";
 	
 	configuration := config.GetConfiguration();

@@ -1,9 +1,5 @@
 package config;
 
-//import (
-//	"gitdeployer/helpers"
-//)
-
 type Server struct {
 	Name string;
 	Path string;

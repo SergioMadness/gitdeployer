@@ -2,34 +2,34 @@ package config;
 
 import(
 	"gitdeployer/helpers"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"encoding/json"
 )
 
 type Configuration struct {
 	Host string;
 	Port int;
-	Servers []*Server;
+	Servers []Server;
 }
 
 var ConfigFilePath, TokenFilePath string;
-var currentConfig Configuration;
+var currentConfig = new(Configuration);
 
-func GetConfiguration() Configuration {
-	var result Configuration;
-	
+func GetConfiguration() *Configuration {
 	if helpers.IsFileExists(ConfigFilePath) {
-		yaml.Unmarshal([]byte(ConfigFilePath), result);
+		if confFile, err := ioutil.ReadFile(ConfigFilePath); err==nil {
+			json.Unmarshal(confFile, &currentConfig);
+		}
 	}
 	
-	return result;
+	return currentConfig;
 }
 
 func SaveConfiguration() bool {
 	var result bool;
 	
 	if helpers.IsFileExists(ConfigFilePath) {
-		if confYaml, err:=yaml.Marshal(currentConfig.Servers); err==nil {
+		if confYaml, err:=json.Marshal(currentConfig); err==nil {
 			ioutil.WriteFile(ConfigFilePath, []byte(confYaml), 0777);
 		}
 	}
