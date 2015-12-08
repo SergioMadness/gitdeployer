@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"gitdeployer/commands"
 	"gitdeployer/config"
 	"gitdeployer/controllers"
 	"gitdeployer/models"
@@ -51,10 +52,17 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func consoleCommand(command string) {
+func consoleCommand(command string, params []string) {
 	switch command {
 	case "create-token":
 		fmt.Println(config.CreateToken())
+		break
+	case "deploy":
+		for _, serverName := range params {
+			fmt.Println("Starting deploy to '" + serverName + "'")
+			commands.Deploy(*config.GetConfiguration().GetServer(serverName))
+		}
+		fmt.Println("Done")
 		break
 	default:
 		fmt.Println("Unknown command")
@@ -74,7 +82,7 @@ func main() {
 	}
 
 	if command != "" {
-		consoleCommand(command)
+		consoleCommand(command, os.Args[2:])
 	} else {
 		// Main page
 		http.HandleFunc("/", handleMessage)

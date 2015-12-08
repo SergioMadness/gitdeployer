@@ -12,6 +12,6 @@ func Exec(name string, args ...string) (string, error) {
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
-
+	
 	return out.String(), err
 }
