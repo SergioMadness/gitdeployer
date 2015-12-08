@@ -1,21 +1,27 @@
 GitDeployer
 ===========
 
+[![Build Status](https://travis-ci.org/SergioMadness/gitdeployer.svg?branch=dev)](https://travis-ci.org/SergioMadness/gitdeployer)
+
 Project structure
 -------------------
 
 ```
+commands				console commands
 config					configuration functions
 controllers				request handlers
 helpers					different helpers
 models					objects
 ```
 
-
 Requirements
 ------------
  - [Go compiler](https://golang.org/dl/)
 
+Console commands
+----------------
+ - ./gitdeployer create-token
+ - ./gitdeployer deploy server-name
 
 ## The MIT License
 
