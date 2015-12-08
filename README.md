@@ -8,17 +8,13 @@ Project structure
 config					configuration functions
 controllers				request handlers
 helpers					different helpers
+models					objects
 ```
 
 
 Requirements
 ------------
  - [Go compiler](https://golang.org/dl/)
-
-
-Dependencies
-------------
- - [go-yaml/yaml](https://github.com/go-yaml/yaml)
 
 
 ## The MIT License

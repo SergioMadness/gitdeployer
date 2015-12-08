@@ -76,7 +76,7 @@ func saveTokens(tokens []*Token) bool {
 func getTokens() []*Token {
 	var result []*Token
 
-	if helpers.IsFileExists(TokenFilePath) {
+	if helpers.IsPathExists(TokenFilePath) {
 		if tokensStr, err := ioutil.ReadFile(TokenFilePath); err == nil {
 			if err := json.Unmarshal(tokensStr, &result); err != nil {
 				fmt.Println(err)

@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"gitdeployer/config"
 	"gitdeployer/controllers"
+	"gitdeployer/models"
 	"log"
 	"net/http"
 	"os"
@@ -29,21 +31,23 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	token := r.FormValue("access-token")
-	if token != "" {
-		//		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
-	}
+	if token == "" || !config.IsTokenExists(token) {
+		jsonResult, _ := json.Marshal(models.CreateResponse(400, "Need access-token", nil))
 
-	switch r.URL.Path {
-	case "/gitlab":
-		fmt.Println("Gitlab")
-		cont := controllers.CreateGitlabController()
-		cont.WebHook(w, r)
-		break
-	case "/deploy":
-		fmt.Println("Deploy")
-		cont := controllers.CreateDeployer()
-		cont.Deploy(w, r)
-		break
+		w.Write(jsonResult)
+	} else {
+		switch r.URL.Path {
+		case "/gitlab":
+			fmt.Println("Gitlab")
+			cont := controllers.CreateGitlabController()
+			cont.WebHook(w, r)
+			break
+		case "/deploy":
+			fmt.Println("Deploy")
+			cont := controllers.CreateDeployer()
+			cont.Deploy(w, r)
+			break
+		}
 	}
 }
 
