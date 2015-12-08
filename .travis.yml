@@ -1,4 +1,9 @@
 language: go
+<<<<<<< HEAD
 go_import_path: gitdeployer
 go:
   - tips
+=======
+go:
+  - tip
+>>>>>>> fef348645ab9b6f664965e885c720b73834bcd65
