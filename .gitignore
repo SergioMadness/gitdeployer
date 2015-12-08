@@ -1,4 +1,5 @@
 *.exe
 *.yml
+!.travis.yml
 *.json
 gitdeployer
