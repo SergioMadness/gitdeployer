@@ -30,6 +30,7 @@ func CreateServer(name, path, defaultBranch, gitUrl, gitLogin, gitPassword strin
 func (s *Server) PrepareServer() error {
 	var result error
 	if helpers.IsPathExists(s.Path) {
+		helpers.Exec("rm", "-rf", s.Path)
 		os.RemoveAll(s.Path)
 	}
 	result = os.MkdirAll(s.Path, 0644)
