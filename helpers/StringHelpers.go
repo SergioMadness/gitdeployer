@@ -1,9 +1,9 @@
-package helpers;
+package helpers
 
 import (
 	"math/rand"
 	"time"
-);
+)
 
 func RandomString(strlen int) string {
 	rand.Seed(time.Now().UTC().UnixNano())
