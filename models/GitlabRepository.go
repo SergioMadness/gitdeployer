@@ -1,12 +1,11 @@
-package models;
+package models
 
 type GitlabRepository struct {
-	Id string `json:"id"`;
-	Message string `json:"message"`;
-	Timestamp string `json:"timestamp"`;
-	Url string `json:"url"`;
-	Added []string `json:"added"`;
-	Modified []string `json:"modified"`;
-	Removed []string `json:"removed"`;
-	Author GitlabChangeAuthor `json:"author"`;
+	Name            string `json:"name"`
+	Url             string `json:"name"`
+	Description     string `json:"name"`
+	Homepage        string `json:"homepage"`
+	GitHttpUrl      string `json:"git_http_url"`
+	GitSSHUrl       string `json:"git_ssh_url"`
+	VisibilityLevel int    `json:"visibility_level"`
 }

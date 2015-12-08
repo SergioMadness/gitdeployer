@@ -1,13 +1,13 @@
 package main
 
 import (
-	"strconv"
+	"fmt"
 	"gitdeployer/config"
 	"gitdeployer/controllers"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 /**
@@ -30,10 +30,15 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	token := r.FormValue("access-token")
 	if token != "" {
-//		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
+		//		config.GetSession().SetCurrentUser(models.NewProfile(config.GetConnection()).GetByToken(token))
 	}
 
 	switch r.URL.Path {
+	case "/gitlab":
+		fmt.Println("Gitlab")
+		cont := controllers.CreateGitlabController()
+		cont.WebHook(w, r)
+		break
 	case "/deploy":
 		fmt.Println("Deploy")
 		cont := controllers.CreateDeployer()
@@ -45,20 +50,20 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 func consoleCommand(command string) {
 	switch command {
 	case "create-token":
-		fmt.Println(config.CreateToken());
+		fmt.Println(config.CreateToken())
 		break
 	default:
-		fmt.Println("Unknown command");
+		fmt.Println("Unknown command")
 	}
 }
 
 func main() {
-	command := "";
-	
-	config.ConfigFilePath = "config.json";
-	config.TokenFilePath = "tokens.json";
-	
-	configuration := config.GetConfiguration();
+	command := ""
+
+	config.ConfigFilePath = "config.json"
+	config.TokenFilePath = "tokens.json"
+
+	configuration := config.GetConfiguration()
 
 	if len(os.Args) > 1 {
 		command = os.Args[1]
@@ -69,10 +74,12 @@ func main() {
 	} else {
 		// Main page
 		http.HandleFunc("/", handleMessage)
+		//Gitlab hook
+		http.HandleFunc("/gitlab", handleRequest)
 		// Deploy
 		http.HandleFunc("/deploy", handleRequest)
 
-		err := http.ListenAndServe(configuration.Host+":"+strconv.Itoa(configuration.Port), nil);
+		err := http.ListenAndServe(configuration.Host+":"+strconv.Itoa(configuration.Port), nil)
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)
 		}
