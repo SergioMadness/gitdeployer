@@ -1,8 +1,7 @@
 package controllers
 
 import (
-	"errors"
-	"fmt"
+	"gitdeployer/commands"
 	"gitdeployer/config"
 )
 
@@ -10,15 +9,13 @@ type GitDeployerBaseController struct {
 }
 
 func (cont *GitDeployerBaseController) PrepareServer(server config.Server) error {
-	if err := server.PrepareServer(); err != nil {
-		fmt.Println("Can't prepare server")
-		return errors.New("Can't prepare server")
+	var err error
+	
+	if err = commands.Deploy(server); err == nil {
+		if err = commands.ComposerInstall(server); err == nil {
+			
+		}
 	}
 
-	if _, err := server.CloneRepo(); err != nil {
-		fmt.Println("Can't clone repo")
-		return errors.New("Can't clone repository")
-	}
-
-	return nil
+	return err
 }
