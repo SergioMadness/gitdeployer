@@ -26,22 +26,24 @@ func handleMessage(w http.ResponseWriter, r *http.Request) {
 * Chat response handler
  */
 func handleRequest(w http.ResponseWriter, r *http.Request) {
+	var result models.Response
+
 	/*
 	* All responses in JSON
 	 */
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
 
 	token := r.FormValue("access-token")
 	if token == "" || !config.IsTokenExists(token) {
-		jsonResult, _ := json.Marshal(models.CreateResponse(400, "Need access-token", nil))
-
-		w.Write(jsonResult)
+		result = *models.CreateResponse(400, "Need access-token", nil)
 	} else {
 		switch r.URL.Path {
 		case "/gitlab":
 			fmt.Println("Gitlab")
 			cont := controllers.CreateGitlabController()
-			cont.WebHook(w, r)
+			result = cont.WebHook(w, r)
+			fmt.Println("Done")
 			break
 		case "/deploy":
 			fmt.Println("Deploy")
@@ -50,6 +52,10 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+
+	jsonResult, _ := json.Marshal(result)
+
+	w.Write(jsonResult)
 }
 
 func consoleCommand(command string, params []string) {

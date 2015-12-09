@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"gitdeployer/helpers"
 	"io/ioutil"
+	"strings"
 )
 
 type Configuration struct {
@@ -15,13 +16,15 @@ type Configuration struct {
 var ConfigFilePath, TokenFilePath string
 var currentConfig = new(Configuration)
 
-func (conf *Configuration) GetServer(param string) *Server {
+func (conf *Configuration) GetServer(params ...string) *Server {
 	var result *Server
 
 	for _, serv := range conf.Servers {
-		if serv.Name == param || serv.Path == param || serv.GitUrl == param {
-			result = &serv
-			break
+		for _, param := range params {
+			if strings.Contains(serv.Name, param) || strings.Contains(serv.Path, param) || strings.Contains(serv.GitUrl, param) {
+				result = &serv
+				break
+			}
 		}
 	}
 
