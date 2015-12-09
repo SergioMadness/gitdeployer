@@ -2,3 +2,7 @@ language: go
 go_import_path: gitdeployer
 go:
   - tip
+branches:
+  only:
+    - master
+    - dev
