@@ -37,22 +37,31 @@ func (c *GitlabController) WebHook(w http.ResponseWriter, r *http.Request) model
 		fmt.Println(gitRequest)
 		var hookErr error
 
-		switch eventType {
-		case HOOK_PUSH:
-			hookErr = c.pushHook(gitRequest)
-			break
-		case HOOK_PUSH_TAG:
-			hookErr = c.tagPushHook(gitRequest)
-			break
-		case HOOK_MERGE:
-			hookErr = c.mergeRequestHook(gitRequest)
-			break
-		}
+		commit := gitRequest.Commits[len(gitRequest.Commits)-1].Id
+		if !config.IsCommitDeployed(commit) {
+			config.AddCommit(commit)
 
-		if hookErr != nil {
-			result.Result = 500
-			result.ResultMessage = "Deploy failed"
-			fmt.Println("Failed")
+			switch eventType {
+			case HOOK_PUSH:
+				hookErr = c.pushHook(gitRequest)
+				break
+			case HOOK_PUSH_TAG:
+				hookErr = c.tagPushHook(gitRequest)
+				break
+			case HOOK_MERGE:
+				hookErr = c.mergeRequestHook(gitRequest)
+				break
+			}
+
+			if hookErr != nil {
+				result.Result = 500
+				result.ResultMessage = "Deploy failed"
+				fmt.Println("Failed")
+			}
+		} else {
+			fmt.Println("Commit is already deployed")
+			result.Result = 403
+			result.ResultMessage = "Commit is already deployed"
 		}
 	} else {
 		fmt.Print("Error: ")

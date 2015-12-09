@@ -13,7 +13,7 @@ type Configuration struct {
 	Servers []Server
 }
 
-var ConfigFilePath, TokenFilePath string
+var ConfigFilePath, TokenFilePath, CommitFilePath string
 var currentConfig = new(Configuration)
 
 func (conf *Configuration) GetServer(params ...string) *Server {

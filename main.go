@@ -80,6 +80,7 @@ func main() {
 
 	config.ConfigFilePath = "config.json"
 	config.TokenFilePath = "tokens.json"
+	config.CommitFilePath = "commits.json"
 
 	configuration := config.GetConfiguration()
 
