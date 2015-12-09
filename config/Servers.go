@@ -1,8 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"gitdeployer/helpers"
 	"os"
+	"strings"
 )
 
 type Server struct {
@@ -43,6 +45,9 @@ func (s *Server) CloneRepo() (string, error) {
 
 	currentDir, _ := os.Getwd()
 	os.Chdir(s.Path)
+	url := s.GitUrl
+	url = strings.Replace(url, "http://", "http://"+s.GitLogin+":"+s.GitPassword+"@", 1)
+	fmt.Println(url)
 	resultStr, err = helpers.Exec("git", "clone", s.GitUrl, ".")
 	s.Checkout(s.DefaultBranch)
 	os.Chdir(currentDir)

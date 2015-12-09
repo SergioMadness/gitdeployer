@@ -5,9 +5,7 @@
 			"Name": "gitdeployer",
 			"Path": "/var/www/",
 			"DefaultBranch": "dev",
-			"GitUrl": "",
-			"GitLogin": "",
-			"GitPassword": ""
+			"GitUrl": ""	
 		}
 	]
 }
