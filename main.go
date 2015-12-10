@@ -66,7 +66,12 @@ func consoleCommand(command string, params []string) {
 	case "deploy":
 		for _, serverName := range params {
 			fmt.Println("Starting deploy to '" + serverName + "'")
-			commands.Deploy(*config.GetConfiguration().GetServer(serverName))
+			server := config.GetConfiguration().GetServer(serverName)
+			if err := server.Deploy(); err == nil {
+				if out, err := commands.ComposerInstall(server.Path); err != nil {
+					fmt.Println(out)
+				}
+			}
 		}
 		fmt.Println("Done")
 		break

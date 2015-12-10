@@ -20,14 +20,26 @@ Requirements
 
 Console commands
 ----------------
- - ./gitdeployer create-token
- - ./gitdeployer deploy server-name
+```bash
+./gitdeployer create-token
+```
+```bash
+./gitdeployer deploy server-name
+```
+
+URLs
+------
+```bash
+http://localhost:9023/gitlab?access-token=sdkjh478gjhvxhjghjsgj784
+```
+Awaiting request from Gitlab
+
 
 ## The MIT License
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Sergey Zinchenko, DataLayer.ru
+Copyright (c) 2015 Sergey Zinchenko, [DataLayer.ru](http://datalayer.ru/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

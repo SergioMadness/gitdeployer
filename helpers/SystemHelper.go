@@ -15,3 +15,14 @@ func Exec(name string, args ...string) (string, error) {
 
 	return out.String(), err
 }
+
+func IsCommandExists(name string) (bool, string) {
+	result := false
+
+	path, err := exec.LookPath(name)
+	if err == nil {
+		result = true
+	}
+
+	return result, path
+}

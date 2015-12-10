@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"gitdeployer/helpers"
 	"os"
@@ -62,4 +63,19 @@ func (s *Server) PullRepo(branch string) (string, error) {
 
 func (s *Server) Checkout(branch string) (string, error) {
 	return helpers.Exec("git", "checkout", branch)
+}
+
+func (s *Server) Deploy() error {
+	fmt.Println("Prepare directory")
+	if err := s.PrepareServer(); err != nil {
+		fmt.Println(err)
+		return errors.New("Can't prepare server")
+	}
+	fmt.Println("Cloning repo")
+	if _, err := s.CloneRepo(); err != nil {
+		fmt.Println(err)
+		return errors.New("Can't clone repository")
+	}
+
+	return nil
 }
