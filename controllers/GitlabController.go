@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"gitdeployer/commands"
 	"gitdeployer/config"
 	"gitdeployer/models"
 	"net/http"
@@ -36,8 +37,11 @@ func (c *GitlabController) WebHook(w http.ResponseWriter, r *http.Request) model
 		fmt.Print("Decoded request: ")
 		fmt.Println(gitRequest)
 		var hookErr error
+		var commit string
 
-		commit := gitRequest.Commits[len(gitRequest.Commits)-1].Id
+		if len(gitRequest.Commits) > 0 {
+			commit = gitRequest.Commits[len(gitRequest.Commits)-1].Id
+		}
 		if !config.IsCommitDeployed(commit) {
 			config.AddCommit(commit)
 
@@ -83,9 +87,16 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 		return errors.New("Need server configuration")
 	}
 
-	if result = c.PrepareServer(*server); result == nil {
-		fmt.Println("Deployed")
+	if result = c.PrepareServer(*server); result != nil {
+		return errors.New("Can't prepare server")
 	}
+	fmt.Println("Deployed")
+
+	if out, err := commands.ComposerInstall(server.Path); err != nil {
+		fmt.Println(out)
+		return errors.New("Can't install composer")
+	}
+	fmt.Println("Composer installed")
 
 	return result
 }
