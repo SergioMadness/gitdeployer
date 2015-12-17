@@ -91,6 +91,11 @@ func main() {
 
 	configuration := config.GetConfiguration()
 
+	if len(configuration.Servers) == 0 {
+		log.Fatal("Need configuration")
+		return
+	}
+
 	if len(os.Args) > 1 {
 		command = os.Args[1]
 	}

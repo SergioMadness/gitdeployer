@@ -19,10 +19,21 @@ var currentConfig = new(Configuration)
 func (conf *Configuration) GetServer(params ...string) *Server {
 	var result *Server
 
+	serverIndex := conf.FindServer(params...)
+	if serverIndex >= 0 {
+		result = conf.Servers[serverIndex]
+	}
+
+	return result
+}
+
+func (conf *Configuration) FindServer(params ...string) int {
+	result := -1
+
 	for _, serv := range conf.Servers {
-		for _, param := range params {
+		for index, param := range params {
 			if strings.Contains(serv.Name, param) || strings.Contains(serv.Path, param) || strings.Contains(serv.GitUrl, param) {
-				result = serv
+				result = index
 				break
 			}
 		}
@@ -31,16 +42,19 @@ func (conf *Configuration) GetServer(params ...string) *Server {
 	return result
 }
 
-func (conf *Configuration) RemoveServer(param string) bool {
+func (conf *Configuration) RemoveServer(params ...string) bool {
 	result := false
+
+	serverIndex := conf.FindServer(params...)
+	if serverIndex >= 0 {
+		conf.Servers = append(conf.Servers[:serverIndex], conf.Servers[serverIndex+1:]...)
+	}
 
 	return result
 }
 
 func (conf *Configuration) IsServerExists(param string) bool {
-	result := false
-
-	return result
+	return conf.FindServer(param) >= 0
 }
 
 func GetConfiguration() *Configuration {
