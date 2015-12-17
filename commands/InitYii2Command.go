@@ -1,10 +1,10 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
 	"gitdeployer/helpers"
 	"os"
-	"errors"
 )
 
 type InitYii2Command struct {
@@ -15,18 +15,20 @@ func (i *InitYii2Command) Execute(path string) (string, error) {
 	var out string
 	var err error
 
-	env := i.Get("env")
+	env := i.Get("Env")
 
 	fmt.Println("Yii2 Init")
 
+	fmt.Println(env)
+
 	if env == "" {
-		return "", errors.New("Need --env param")
+		return "", errors.New("Need Env param")
 	}
 
 	currentDir, _ := os.Getwd()
 	os.Chdir(path)
 
-	out, err = helpers.Exec("php", "init --overwrite=All --env="+env)
+	out, err = helpers.Exec("php", "init", "--overwrite=All", "--env="+env)
 
 	os.Chdir(currentDir)
 	fmt.Println(out)

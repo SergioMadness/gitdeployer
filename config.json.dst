@@ -11,6 +11,12 @@
 					"Name": "composer"
 				},
 				{
+					"Name": "yii2-init",
+					"Config": {
+						"Env": "local"
+					}
+				},
+				{
 					"Name": "codeception",
 					"Config": {
 						"Dir": "tests"
