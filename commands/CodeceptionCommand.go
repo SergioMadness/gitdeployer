@@ -6,7 +6,11 @@ import (
 	"os"
 )
 
-func Codecept(path string) (string, error) {
+type CodeceptionCommand struct {
+	BaseCommand
+}
+
+func (i *CodeceptionCommand) Execute(path string) (string, error) {
 	var out string
 	var err error
 

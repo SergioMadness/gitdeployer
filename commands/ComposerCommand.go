@@ -47,9 +47,7 @@ func ComposerPHPInstall(path string) (string, error) {
 
 func DownloadComposer(path string) error {
 	fmt.Println("Composer download")
-
 	err := helpers.DownloadFile("https://getcomposer.org/composer.phar", path+"composer.phar")
-	fmt.Println(err)
 	fmt.Println("Composer downloaded")
 
 	return err

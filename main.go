@@ -68,7 +68,11 @@ func consoleCommand(command string, params []string) {
 			fmt.Println("Starting deploy to '" + serverName + "'")
 			server := config.GetConfiguration().GetServer(serverName)
 			if err := server.Deploy(); err == nil {
-				commands.ExecuteCommandList(server.Commands, server.Path)
+				output, errors := commands.ExecuteCommandList(server.Commands, server.Path)
+				fmt.Println(output)
+				if errors != nil {
+					fmt.Println(err)
+				}
 			}
 		}
 		fmt.Println("Done")
@@ -86,8 +90,6 @@ func main() {
 	config.CommitFilePath = "commits.json"
 
 	configuration := config.GetConfiguration()
-	
-	fmt.Println(configuration)
 
 	if len(os.Args) > 1 {
 		command = os.Args[1]
