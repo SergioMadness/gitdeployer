@@ -5,7 +5,18 @@
 			"Name": "gitdeployer",
 			"Path": "/var/www/",
 			"DefaultBranch": "dev",
-			"GitUrl": ""	
+			"GitUrl": "",
+			"Commands": [
+				{
+					"Name": "composer"
+				},
+				{
+					"Name": "codeception",
+					"Config": {
+						"Dir": "tests"
+					}
+				}
+			]
 		}
 	]
 }

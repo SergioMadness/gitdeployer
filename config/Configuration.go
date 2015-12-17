@@ -10,7 +10,7 @@ import (
 type Configuration struct {
 	Host    string
 	Port    int
-	Servers []Server
+	Servers []*Server
 }
 
 var ConfigFilePath, TokenFilePath, CommitFilePath string
@@ -22,7 +22,7 @@ func (conf *Configuration) GetServer(params ...string) *Server {
 	for _, serv := range conf.Servers {
 		for _, param := range params {
 			if strings.Contains(serv.Name, param) || strings.Contains(serv.Path, param) || strings.Contains(serv.GitUrl, param) {
-				result = &serv
+				result = serv
 				break
 			}
 		}

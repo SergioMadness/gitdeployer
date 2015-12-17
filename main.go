@@ -68,11 +68,7 @@ func consoleCommand(command string, params []string) {
 			fmt.Println("Starting deploy to '" + serverName + "'")
 			server := config.GetConfiguration().GetServer(serverName)
 			if err := server.Deploy(); err == nil {
-				if out, err := commands.ComposerInstall(server.Path); err == nil {
-					if commands.Codecept(server.Path); err != nil {
-						fmt.Println(out)
-					}
-				}
+				commands.ExecuteCommandList(server.Commands, server.Path)
 			}
 		}
 		fmt.Println("Done")

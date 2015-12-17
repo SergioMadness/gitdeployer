@@ -6,7 +6,11 @@ import (
 	"os"
 )
 
-func ComposerInstall(path string) (string, error) {
+type ComposerCommand struct {
+	BaseCommand
+}
+
+func (c *ComposerCommand) Execute(path string) (string, error) {
 	var out string
 	var err error
 

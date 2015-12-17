@@ -15,6 +15,7 @@ type Server struct {
 	GitUrl        string
 	GitLogin      string
 	GitPassword   string
+	Commands      []*DeployerCommand
 }
 
 func CreateServer(name, path, defaultBranch, gitUrl, gitLogin, gitPassword string) *Server {
@@ -46,6 +47,7 @@ func (s *Server) CloneRepo() (string, error) {
 
 	currentDir, _ := os.Getwd()
 	os.Chdir(s.Path)
+	fmt.Println(s.Path)
 	url := s.GitUrl
 	url = strings.Replace(url, "http://", "http://"+s.GitLogin+":"+s.GitPassword+"@", 1)
 	fmt.Println(url)

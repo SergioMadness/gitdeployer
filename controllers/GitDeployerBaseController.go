@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"gitdeployer/commands"
+	"fmt"
 	"gitdeployer/config"
 )
 
@@ -12,9 +12,7 @@ func (cont *GitDeployerBaseController) PrepareServer(server config.Server) error
 	var err error
 
 	if err = server.Deploy(); err == nil {
-		if _, err = commands.ComposerInstall(server.Path); err == nil {
-
-		}
+		fmt.Println(err)
 	}
 
 	return err

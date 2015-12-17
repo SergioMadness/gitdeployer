@@ -92,11 +92,7 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 	}
 	fmt.Println("Deployed")
 
-	if out, err := commands.ComposerInstall(server.Path); err != nil {
-		fmt.Println(out)
-		return errors.New("Can't install composer")
-	}
-	fmt.Println("Composer installed")
+	commands.ExecuteCommandList(server.Commands, server.Path)
 
 	if out, err := commands.Codecept(server.Path); err != nil {
 		fmt.Println(out)
