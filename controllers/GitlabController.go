@@ -94,6 +94,12 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 
 	commands.ExecuteCommandList(server.Commands, server.Path)
 
+	if out, err := commands.Codecept(server.Path); err != nil {
+		fmt.Println(out)
+		return errors.New("Can't install composer")
+	}
+	fmt.Println("Codeception tests")
+
 	return result
 }
 
