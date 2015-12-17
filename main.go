@@ -86,6 +86,8 @@ func main() {
 	config.CommitFilePath = "commits.json"
 
 	configuration := config.GetConfiguration()
+	
+	fmt.Println(configuration)
 
 	if len(os.Args) > 1 {
 		command = os.Args[1]

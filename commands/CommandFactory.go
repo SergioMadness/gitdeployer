@@ -10,7 +10,10 @@ func CreateCommand(name string) CommandInterface {
 	switch name {
 	case "composer":
 		return new(ComposerCommand)
+	case "codeception":
 		break
+	case "yii2-init":
+		return new(InitYii2Command)
 	}
 
 	return nil
