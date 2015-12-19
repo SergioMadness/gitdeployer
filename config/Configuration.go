@@ -5,6 +5,7 @@ import (
 	"gitdeployer/helpers"
 	"io/ioutil"
 	"strings"
+	"gitdeployer/modules/logger"
 )
 
 type Configuration struct {
@@ -15,6 +16,7 @@ type Configuration struct {
 
 var ConfigFilePath, TokenFilePath, CommitFilePath string
 var currentConfig = new(Configuration)
+var currentLoger = logger.CreateLogger()
 
 func (conf *Configuration) GetServer(params ...string) *Server {
 	var result *Server
@@ -77,4 +79,8 @@ func SaveConfiguration() bool {
 	}
 
 	return result
+}
+
+func (conf *Configuration) GetLogger() *logger.Logger {
+	return currentLoger
 }

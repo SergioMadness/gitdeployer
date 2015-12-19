@@ -29,7 +29,7 @@ func (l *Logger) Flush() error {
 		os.MkdirAll("logs/", 0644)
 	}
 
-	if tw, err = json.Marshal(l.messages); err != nil {
+	if tw, err = json.Marshal(l.messages); err == nil {
 		ioutil.WriteFile("logs/"+fileName+".data", tw, 0644)
 	}
 
