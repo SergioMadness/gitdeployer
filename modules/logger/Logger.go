@@ -35,3 +35,9 @@ func (l *Logger) Flush() error {
 
 	return err
 }
+
+func (l *Logger) GetList() []LogRecord {
+	var result []LogRecord
+	
+	return result
+}

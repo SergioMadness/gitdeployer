@@ -8,3 +8,4 @@ GitDeployer changelog
  - Composer command
  - Codeception command
  - Yii2 init command
+ - Logger
