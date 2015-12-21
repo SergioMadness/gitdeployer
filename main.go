@@ -70,6 +70,9 @@ func consoleCommand(command string, params []string) {
 			if err := server.Deploy(); err == nil {
 				output, errors := commands.ExecuteCommandList(server.Commands, server.Path)
 				fmt.Println(output)
+				logger := config.GetConfiguration().GetLogger()
+				logger.Log("deploy", output)
+				logger.Flush()
 				if errors != nil {
 					fmt.Println(err)
 				}
