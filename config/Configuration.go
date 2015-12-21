@@ -5,7 +5,6 @@ import (
 	"gitdeployer/helpers"
 	"io/ioutil"
 	"strings"
-	"gitdeployer/modules/logger"
 )
 
 type Configuration struct {
@@ -78,8 +77,4 @@ func SaveConfiguration() bool {
 	}
 
 	return result
-}
-
-func (conf *Configuration) GetLogger() *logger.Logger {
-	return currentLoger
 }

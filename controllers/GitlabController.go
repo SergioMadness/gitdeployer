@@ -93,9 +93,10 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 	fmt.Println("Deployed")
 
 	if output, err := commands.ExecuteCommandList(server.Commands, server.Path); err == nil {
-		logger := config.GetConfiguration().GetLogger()
-		logger.Log("full", output)
-		logger.Flush()
+		fmt.Println(output)
+//		logger := config.GetConfiguration().GetLogger()
+//		logger.Log("full", output)
+//		logger.Flush()
 	}
 
 	return result
