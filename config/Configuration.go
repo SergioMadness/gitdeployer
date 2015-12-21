@@ -16,7 +16,6 @@ type Configuration struct {
 
 var ConfigFilePath, TokenFilePath, CommitFilePath string
 var currentConfig = new(Configuration)
-var currentLoger = logger.CreateLogger()
 
 func (conf *Configuration) GetServer(params ...string) *Server {
 	var result *Server
