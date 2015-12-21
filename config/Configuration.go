@@ -5,7 +5,6 @@ import (
 	"gitdeployer/helpers"
 	"io/ioutil"
 	"strings"
-	"gitdeployer/modules/logger"
 )
 
 type Configuration struct {
