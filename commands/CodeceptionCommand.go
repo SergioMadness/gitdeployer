@@ -28,8 +28,6 @@ func (i *CodeceptionCommand) Execute(path string) (string, error) {
 		out, err = helpers.Exec("codecept", "run", "--steps")
 	}
 	os.Chdir(currentDir)
-	fmt.Println(out)
-	fmt.Println(err)
 
 	return out, err
 }
@@ -54,7 +52,6 @@ func DownloadCodecept(path string) error {
 	fmt.Println("Codeception download")
 
 	err := helpers.DownloadFile("http://codeception.com/codecept.phar", path+"codecept.phar")
-	fmt.Println(err)
 	fmt.Println("Codeception downloaded")
 
 	return err

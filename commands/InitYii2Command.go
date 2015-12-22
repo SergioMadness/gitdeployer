@@ -17,9 +17,7 @@ func (i *InitYii2Command) Execute(path string) (string, error) {
 
 	env := i.Get("Env")
 
-	fmt.Println("Yii2 Init")
-
-	fmt.Println(env)
+	fmt.Println("Yii2 Init " + env)
 
 	if env == "" {
 		return "", errors.New("Need Env param")
@@ -31,8 +29,6 @@ func (i *InitYii2Command) Execute(path string) (string, error) {
 	out, err = helpers.Exec("php", "init", "--overwrite=All", "--env="+env)
 
 	os.Chdir(currentDir)
-	fmt.Println(out)
-	fmt.Println(err)
 
 	return out, err
 }

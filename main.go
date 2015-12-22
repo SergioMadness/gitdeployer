@@ -68,13 +68,15 @@ func consoleCommand(command string, params []string) {
 		for _, serverName := range params {
 			fmt.Println("Starting deploy to '" + serverName + "'")
 			server := config.GetConfiguration().GetServer(serverName)
+			currentLogger := logger.CreateLogger()
 			if err := server.Deploy(); err == nil {
-				output, errors := commands.ExecuteCommandList(server.Commands, server.Path, logger.CreateLogger())
+				output, errors := commands.ExecuteCommandList(server.Commands, server.Path, currentLogger)
 				fmt.Println(output)
 				if errors != nil {
 					fmt.Println(err)
 				}
 			}
+			currentLogger.Flush()
 		}
 		fmt.Println("Done")
 		break
