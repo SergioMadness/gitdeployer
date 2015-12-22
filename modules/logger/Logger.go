@@ -5,9 +5,11 @@ import (
 	"gitdeployer/helpers"
 	"io/ioutil"
 	"os"
+	"gitdeployer/modules/observer"
 )
 
 type Logger struct {
+	observer.Observable
 	messages []*LogMessage
 }
 

@@ -1,5 +1,5 @@
 package interfaces
 
 type Observer interface {
-	Notify()
+	Notify(message interface{})
 }
