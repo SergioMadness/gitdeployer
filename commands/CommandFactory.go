@@ -29,11 +29,11 @@ func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string
 				commOutput, commError := comm.Execute(executionPath)
 				err = commError
 				result += commOutput
-//				if err == nil {
+				if err == nil {
 					logger.Log(dc.Name, commOutput)
-//				} else {
+				} else {
 					logger.Log(dc.Name, err.Error())
-//				}
+				}
 			}
 		}
 	}
