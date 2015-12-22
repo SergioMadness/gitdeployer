@@ -8,6 +8,7 @@ import (
 	"gitdeployer/config"
 	"gitdeployer/models"
 	"net/http"
+	"gitdeployer/modules/logger"
 )
 
 const HOOK_PUSH = "Push Hook"
@@ -92,12 +93,16 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 	}
 	fmt.Println("Deployed")
 
-	if output, err := commands.ExecuteCommandList(server.Commands, server.Path); err == nil {
-		fmt.Println(output)
-//		logger := config.GetConfiguration().GetLogger()
-//		logger.Log("full", output)
-//		logger.Flush()
-	}
+//	logger := logger.CreateLogger()
+	
+	go commands.ExecuteCommandList(server.Commands, server.Path, logger.CreateLogger());
+
+//	if output, err := commands.ExecuteCommandList(server.Commands, server.Path); err == nil {
+//		fmt.Println(output)
+//		//		logger := config.GetConfiguration().GetLogger()
+//		//		logger.Log("full", output)
+//		//		logger.Flush()
+//	}
 
 	return result
 }

@@ -38,6 +38,6 @@ func (l *Logger) Flush() error {
 
 func (l *Logger) GetList() []LogRecord {
 	var result []LogRecord
-	
+
 	return result
 }

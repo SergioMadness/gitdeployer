@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"gitdeployer/modules/logger"
 )
 
 /**
@@ -68,11 +69,8 @@ func consoleCommand(command string, params []string) {
 			fmt.Println("Starting deploy to '" + serverName + "'")
 			server := config.GetConfiguration().GetServer(serverName)
 			if err := server.Deploy(); err == nil {
-				output, errors := commands.ExecuteCommandList(server.Commands, server.Path)
+				output, errors := commands.ExecuteCommandList(server.Commands, server.Path, logger.CreateLogger())
 				fmt.Println(output)
-//				logger := config.GetConfiguration().GetLogger()
-//				logger.Log("deploy", output)
-//				logger.Flush()
 				if errors != nil {
 					fmt.Println(err)
 				}

@@ -2,6 +2,7 @@ package commands
 
 import (
 	"gitdeployer/config"
+	"gitdeployer/modules/logger/interfaces"
 )
 
 func CreateCommand(name string) CommandInterface {
@@ -17,7 +18,7 @@ func CreateCommand(name string) CommandInterface {
 	return nil
 }
 
-func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string) (string, error) {
+func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string, logger interfaces.LoggerInterface) (string, error) {
 	var result string
 	var err error
 
@@ -28,6 +29,11 @@ func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string
 				commOutput, commError := comm.Execute(executionPath)
 				err = commError
 				result += commOutput
+				if err == nil {
+					logger.Log(dc.Name, commOutput)
+				} else {
+					logger.Log(dc.Name, err.Error())
+				}
 			}
 		}
 	}
