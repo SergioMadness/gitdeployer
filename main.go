@@ -6,6 +6,7 @@ import (
 	"gitdeployer/commands"
 	"gitdeployer/config"
 	"gitdeployer/controllers"
+	"gitdeployer/helpers"
 	"gitdeployer/models"
 	"gitdeployer/modules/logger"
 	"log"
@@ -70,13 +71,13 @@ func consoleCommand(command string, params []string) {
 			fmt.Println("Starting deploy to '" + serverName + "'")
 			server := config.GetConfiguration().GetServer(serverName)
 			currentLogger.Log("application", "Starting deploy to '"+serverName+"'")
-			if err := server.Deploy(); err == nil {
-				output, errors := commands.ExecuteCommandList(server.Commands, server.Path, currentLogger)
-				fmt.Println(output)
-				if errors != nil {
-					fmt.Println(err)
-				}
-			}
+
+			dir := config.GetConfiguration().ReleaseDir + "/" + helpers.RandomString(8)
+
+			helpers.PrepareDir(dir)
+
+			commands.TestAndDeploy(server, dir, currentLogger)
+
 			currentLogger.Flush()
 		}
 		currentLogger.Log("application", "Done")
@@ -95,6 +96,10 @@ func main() {
 	config.CommitFilePath = "commits.json"
 
 	configuration := config.GetConfiguration()
+
+	if !helpers.IsPathExists("releases") {
+		os.Mkdir("releases", 0644)
+	}
 
 	if len(configuration.Servers) == 0 {
 		log.Fatal("Need configuration")

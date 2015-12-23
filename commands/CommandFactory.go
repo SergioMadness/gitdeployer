@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"gitdeployer/config"
 	"gitdeployer/modules/logger/interfaces"
 )
@@ -37,5 +38,23 @@ func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string
 		}
 	}
 
+	logger.Flush()
+
 	return result, err
+}
+
+func TestAndDeploy(server *config.Server, dir string, log interfaces.LoggerInterface) error {
+	var err error
+
+	if _, err = server.CloneTo(dir); err == nil {
+		fmt.Println("Dir: "+dir+"/")
+		if _, err = ExecuteCommandList(server.Commands, dir+"/", log); err == nil {
+			if err = server.Deploy(); err != nil {
+				log.Log("application", err.Error())
+			}
+		}
+	}
+	log.Log("aplication", err.Error())
+	log.Flush()
+	return err
 }

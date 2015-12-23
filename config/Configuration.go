@@ -8,9 +8,10 @@ import (
 )
 
 type Configuration struct {
-	Host    string
-	Port    int
-	Servers []*Server
+	Host       string
+	Port       int
+	ReleaseDir string
+	Servers    []*Server
 }
 
 var ConfigFilePath, TokenFilePath, CommitFilePath string
@@ -63,6 +64,9 @@ func GetConfiguration() *Configuration {
 		if confFile, err := ioutil.ReadFile(ConfigFilePath); err == nil {
 			json.Unmarshal(confFile, &currentConfig)
 		}
+	}
+	if currentConfig.ReleaseDir == "" {
+		currentConfig.ReleaseDir = "releases"
 	}
 
 	return currentConfig

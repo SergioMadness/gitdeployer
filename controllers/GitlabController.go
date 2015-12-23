@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"gitdeployer/commands"
 	"gitdeployer/config"
+	"gitdeployer/helpers"
 	"gitdeployer/models"
 	"gitdeployer/modules/logger"
 	"net/http"
@@ -88,16 +89,11 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 		return errors.New("Need server configuration")
 	}
 
-	if result = c.PrepareServer(*server); result != nil {
-		return errors.New("Can't prepare server")
-	}
-	fmt.Println("Deployed")
+	dir := config.GetConfiguration().ReleaseDir + "/" + helpers.RandomString(8)
 
-	logger := logger.CreateLogger()
+	helpers.PrepareDir(dir)
 
-	go commands.ExecuteCommandList(server.Commands, server.Path, logger)
-
-	logger.Flush()
+	go commands.TestAndDeploy(server, dir, logger.CreateLogger())
 
 	return result
 }

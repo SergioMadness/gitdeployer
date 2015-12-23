@@ -16,8 +16,8 @@ func (c *ComposerCommand) Execute(path string) (string, error) {
 
 	fmt.Println("Composer install")
 
-	currentDir, _ := os.Getwd()
-	os.Chdir(path)
+//	currentDir, _ := os.Getwd()
+//	os.Chdir(path)
 
 	commandExists, _ := helpers.IsCommandExists("composer")
 
@@ -27,7 +27,7 @@ func (c *ComposerCommand) Execute(path string) (string, error) {
 	} else {
 		out, err = helpers.Exec("composer", "install")
 	}
-	os.Chdir(currentDir)
+//	os.Chdir(currentDir)
 
 	return out, err
 }

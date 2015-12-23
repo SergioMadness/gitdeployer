@@ -47,3 +47,13 @@ func DownloadFile(downloadUrl, savePath string) error {
 
 	return nil
 }
+
+func PrepareDir(path string) error {
+	var result error
+	if IsPathExists(path) {
+		Exec("rm", "-rf", path)
+		os.RemoveAll(path)
+	}
+	result = os.MkdirAll(path, 0644)
+	return result
+}
