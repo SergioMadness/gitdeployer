@@ -15,7 +15,7 @@ func CreateLogMessage(category, message string) *LogMessage {
 
 	result.Time = time.Now().Unix()
 	result.Category = category
-	result.Message = category
+	result.Message = message
 
 	return result
 }

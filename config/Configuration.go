@@ -20,6 +20,7 @@ func (conf *Configuration) GetServer(params ...string) *Server {
 	var result *Server
 
 	serverIndex := conf.FindServer(params...)
+	//	fmt.Println("Server index:" + string(serverIndex))
 	if serverIndex >= 0 {
 		result = conf.Servers[serverIndex]
 	}
@@ -30,8 +31,8 @@ func (conf *Configuration) GetServer(params ...string) *Server {
 func (conf *Configuration) FindServer(params ...string) int {
 	result := -1
 
-	for _, serv := range conf.Servers {
-		for index, param := range params {
+	for index, serv := range conf.Servers {
+		for _, param := range params {
 			if strings.Contains(serv.Name, param) || strings.Contains(serv.Path, param) || strings.Contains(serv.GitUrl, param) {
 				result = index
 				break

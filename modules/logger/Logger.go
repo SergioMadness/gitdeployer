@@ -5,9 +5,11 @@ import (
 	"gitdeployer/helpers"
 	"io/ioutil"
 	"os"
+	"gitdeployer/modules/observer"
 )
 
 type Logger struct {
+	observer.Observable
 	messages []*LogMessage
 }
 
@@ -38,6 +40,6 @@ func (l *Logger) Flush() error {
 
 func (l *Logger) GetList() []LogRecord {
 	var result []LogRecord
-	
+
 	return result
 }

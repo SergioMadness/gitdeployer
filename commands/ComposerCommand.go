@@ -28,8 +28,6 @@ func (c *ComposerCommand) Execute(path string) (string, error) {
 		out, err = helpers.Exec("composer", "install")
 	}
 	os.Chdir(currentDir)
-	fmt.Println(out)
-	fmt.Println(err)
 
 	return out, err
 }

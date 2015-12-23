@@ -7,6 +7,7 @@ import (
 	"gitdeployer/config"
 	"gitdeployer/controllers"
 	"gitdeployer/models"
+	"gitdeployer/modules/logger"
 	"log"
 	"net/http"
 	"os"
@@ -64,20 +65,21 @@ func consoleCommand(command string, params []string) {
 		fmt.Println(config.CreateToken())
 		break
 	case "deploy":
+		currentLogger := logger.CreateLogger()
 		for _, serverName := range params {
 			fmt.Println("Starting deploy to '" + serverName + "'")
 			server := config.GetConfiguration().GetServer(serverName)
+			currentLogger.Log("application", "Starting deploy to '"+serverName+"'")
 			if err := server.Deploy(); err == nil {
-				output, errors := commands.ExecuteCommandList(server.Commands, server.Path)
+				output, errors := commands.ExecuteCommandList(server.Commands, server.Path, currentLogger)
 				fmt.Println(output)
-//				logger := config.GetConfiguration().GetLogger()
-//				logger.Log("deploy", output)
-//				logger.Flush()
 				if errors != nil {
 					fmt.Println(err)
 				}
 			}
+			currentLogger.Flush()
 		}
+		currentLogger.Log("application", "Done")
 		fmt.Println("Done")
 		break
 	default:
