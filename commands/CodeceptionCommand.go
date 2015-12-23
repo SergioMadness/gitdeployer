@@ -16,8 +16,10 @@ func (i *CodeceptionCommand) Execute(path string) (string, error) {
 
 	fmt.Println("Codeception tests")
 
+	dir := i.Get("Dir")
+
 	currentDir, _ := os.Getwd()
-	os.Chdir(path + "/tests")
+	os.Chdir(path + "/" + dir)
 
 	commandExists, _ := helpers.IsCommandExists("codecept")
 
