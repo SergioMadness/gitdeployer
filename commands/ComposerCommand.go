@@ -6,18 +6,17 @@ import (
 	"os"
 )
 
+// Composer command
 type ComposerCommand struct {
 	BaseCommand
 }
 
+// Execute composer command
 func (c *ComposerCommand) Execute(path string) (string, error) {
 	var out string
 	var err error
 
 	fmt.Println("Composer install")
-
-//	currentDir, _ := os.Getwd()
-//	os.Chdir(path)
 
 	commandExists, _ := helpers.IsCommandExists("composer")
 
@@ -27,11 +26,11 @@ func (c *ComposerCommand) Execute(path string) (string, error) {
 	} else {
 		out, err = helpers.Exec("composer", "install")
 	}
-//	os.Chdir(currentDir)
 
 	return out, err
 }
 
+// Execute 'php composer.phar install' command
 func ComposerPHPInstall(path string) (string, error) {
 	currentDir, _ := os.Getwd()
 	os.Chdir(path)
@@ -43,6 +42,7 @@ func ComposerPHPInstall(path string) (string, error) {
 	return output, err
 }
 
+// Download composer.phar
 func DownloadComposer(path string) error {
 	fmt.Println("Composer download")
 	err := helpers.DownloadFile("https://getcomposer.org/composer.phar", path+"composer.phar")

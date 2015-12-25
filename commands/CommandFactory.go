@@ -6,6 +6,7 @@ import (
 	"gitdeployer/modules/logger/interfaces"
 )
 
+// Command fabric
 func CreateCommand(name string) CommandInterface {
 	switch name {
 	case "composer":
@@ -19,6 +20,7 @@ func CreateCommand(name string) CommandInterface {
 	return nil
 }
 
+// Execute list of commands
 func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string, logger interfaces.LoggerInterface) (string, error) {
 	var result string
 	var err error
@@ -43,6 +45,7 @@ func ExecuteCommandList(commands []*config.DeployerCommand, executionPath string
 	return result, err
 }
 
+// Prepare release and deploy to server
 func TestAndDeploy(server *config.Server, dir string, log interfaces.LoggerInterface) error {
 	var err error
 

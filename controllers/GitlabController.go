@@ -12,18 +12,26 @@ import (
 	"net/http"
 )
 
+// 'Push' request
 const HOOK_PUSH = "Push Hook"
+
+// 'Tag Push' request
 const HOOK_PUSH_TAG = "Tag Push Hook"
+
+// 'Merge Request' request
 const HOOK_MERGE = "Merge Request Hook"
 
+// Handle request from gitlab
 type GitlabController struct {
 	GitDeployerBaseController
 }
 
+// Constructor
 func CreateGitlabController() *GitlabController {
 	return new(GitlabController)
 }
 
+// Main request handler
 func (c *GitlabController) WebHook(w http.ResponseWriter, r *http.Request) models.Response {
 	var result models.Response
 	var gitRequest models.GitlabRequest
@@ -79,6 +87,7 @@ func (c *GitlabController) WebHook(w http.ResponseWriter, r *http.Request) model
 	return result
 }
 
+// 'Push' request handler
 func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 	var result error
 
@@ -98,10 +107,12 @@ func (c *GitlabController) pushHook(gitlabObject models.GitlabRequest) error {
 	return result
 }
 
+// 'Tag Push' request handler
 func (c *GitlabController) tagPushHook(gitlabObject models.GitlabRequest) error {
 	return nil
 }
 
+// 'Merge Push' request handler
 func (c *GitlabController) mergeRequestHook(gitlabObject models.GitlabRequest) error {
 	return nil
 }

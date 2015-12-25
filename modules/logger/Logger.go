@@ -13,14 +13,17 @@ type Logger struct {
 	messages []*LogMessage
 }
 
+// Constructor
 func CreateLogger() *Logger {
 	return new(Logger)
 }
 
+// Log event
 func (l *Logger) Log(category, message string) {
 	l.messages = append(l.messages, CreateLogMessage(category, message))
 }
 
+// Flush all messages to file
 func (l *Logger) Flush() error {
 	var tw []byte
 	var err error
@@ -38,6 +41,7 @@ func (l *Logger) Flush() error {
 	return err
 }
 
+// Get log files
 func (l *Logger) GetList() []LogRecord {
 	var result []LogRecord
 

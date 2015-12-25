@@ -18,6 +18,7 @@ func GetWrapper() *ChannelWrapper {
 	return currentWrapper
 }
 
+// Get channel by id
 func (cw *ChannelWrapper) GetChannel(id int) chan string {
 	if cw.channels[id] == nil {
 		cw.channels[id] = make(chan string)

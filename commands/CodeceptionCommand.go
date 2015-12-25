@@ -6,10 +6,14 @@ import (
 	"os"
 )
 
+// Codeception command
+// 
+// Init testing by codeception
 type CodeceptionCommand struct {
 	BaseCommand
 }
 
+// Execute command
 func (i *CodeceptionCommand) Execute(path string) (string, error) {
 	var out string
 	var err error
@@ -34,6 +38,7 @@ func (i *CodeceptionCommand) Execute(path string) (string, error) {
 	return out, err
 }
 
+// Execute codeception.phar
 func CodeceptPHP(path string) (string, error) {
 	var output string
 	var err error
@@ -50,6 +55,7 @@ func CodeceptPHP(path string) (string, error) {
 	return output, err
 }
 
+// Download codeception.phar
 func DownloadCodecept(path string) error {
 	fmt.Println("Codeception download")
 

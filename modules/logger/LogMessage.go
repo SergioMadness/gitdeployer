@@ -10,6 +10,7 @@ type LogMessage struct {
 	Message  string
 }
 
+// Constructor
 func CreateLogMessage(category, message string) *LogMessage {
 	result := new(LogMessage)
 

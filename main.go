@@ -15,18 +15,14 @@ import (
 	"strconv"
 )
 
-/**
-* Handle http request
- */
+// Handle http request
 func handleMessage(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("This is git deployer."))
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-/**
-* Chat response handler
- */
+// Chat response handler
 func handleRequest(w http.ResponseWriter, r *http.Request) {
 	var result models.Response
 
@@ -60,6 +56,7 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResult)
 }
 
+// Console command handler
 func consoleCommand(command string, params []string) {
 	switch command {
 	case "create-token":
@@ -88,6 +85,7 @@ func consoleCommand(command string, params []string) {
 	}
 }
 
+// Main function
 func main() {
 	command := ""
 

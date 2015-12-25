@@ -5,6 +5,7 @@ type LogRecord struct {
 	Hash string
 }
 
+// Constructor
 func CreateLogRecord(time int64, hash string) *LogRecord {
 	result := new(LogRecord)
 

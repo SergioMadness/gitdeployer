@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 )
 
+// Check is path exists
 func IsPathExists(path string) bool {
 	result := false
 	if _, err := os.Stat(path); err == nil {
@@ -15,6 +16,7 @@ func IsPathExists(path string) bool {
 	return result
 }
 
+// Download file
 func DownloadFile(downloadUrl, savePath string) error {
 	dir := filepath.Dir(savePath)
 
@@ -48,6 +50,7 @@ func DownloadFile(downloadUrl, savePath string) error {
 	return nil
 }
 
+// Create full path
 func PrepareDir(path string) error {
 	var result error
 	if IsPathExists(path) {
