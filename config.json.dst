@@ -23,6 +23,17 @@
 						"Dir": "tests"
 					}
 				}
+			],
+			"DeployCommands": [
+				{
+					"Name": "composer"
+				},
+				{
+					"Name": "yii2-init",
+					"Config": {
+						"Env": "prod"
+					}
+				}
 			]
 		}
 	]

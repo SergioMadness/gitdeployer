@@ -50,10 +50,12 @@ func TestAndDeploy(server *config.Server, dir string, log interfaces.LoggerInter
 	var err error
 
 	if _, err = server.CloneTo(dir); err == nil {
-		fmt.Println("Dir: "+dir+"/")
+		fmt.Println("Dir: " + dir + "/")
 		if _, err = ExecuteCommandList(server.Commands, dir+"/", log); err == nil {
 			if err = server.Deploy(); err != nil {
 				log.Log("application", err.Error())
+			} else {
+				_, err = ExecuteCommandList(server.DeployCommands, server.Path, log)
 			}
 		}
 	}

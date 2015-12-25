@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -51,12 +52,27 @@ func DownloadFile(downloadUrl, savePath string) error {
 }
 
 // Create full path
-func PrepareDir(path string) error {
+func PrepareDir(path string, clear bool) error {
 	var result error
-	if IsPathExists(path) {
+	if IsPathExists(path) && clear {
 		Exec("rm", "-rf", path)
 		os.RemoveAll(path)
 	}
 	result = os.MkdirAll(path, 0644)
 	return result
+}
+
+// Check is dir empty
+func IsEmpty(name string) (bool, error) {
+	f, err := os.Open(name)
+	if err != nil {
+		return false, err
+	}
+	defer f.Close()
+
+	_, err = f.Readdir(1)
+	if err == io.EOF {
+		return true, nil
+	}
+	return false, err
 }
